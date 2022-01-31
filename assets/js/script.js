@@ -4,6 +4,7 @@ const input = document.querySelector('#input');
 const display = document.querySelector('#display');
 const icon = document.querySelector('#icon');
 const fiveDays = document.querySelector('#fiveDays');
+const uv = document.querySelector('#uv');
 function getWeather(lat, lon) {
   fetch('https://api.openweathermap.org/data/2.5/onecall?lat='+lat+'&lon='+lon+'&exclude=hourly,minutely&units=imperial&lang=en&appid='+key)
   .then(response => {
@@ -15,14 +16,23 @@ function getWeather(lat, lon) {
     document.querySelector('#currentTemp').textContent = data.current.temp + " F";
     document.querySelector('#currentWind').textContent = data.current.wind_speed + " MPH";
     document.querySelector('#currentHumidity').textContent = data.current.humidity + " %";
-    document.querySelector('#uv').textContent = data.current.uvi;
+    uv.textContent = data.current.uvi;
+    if (data.current.uvi < 3) {
+      uv.className = 'uv-low';
+    } else if (3 <= data.current.uvi < 6) {
+      uv.className = 'uv-moderate';
+    } else if (6 <= data.current.uvi < 8) {
+      uv.className = 'uv-high';
+    } else if (8 <= data.current.uvi < 11) {
+      uv.className = 'uv-varyhigh';
+    } else if (11 <= data.current.uvi) {
+      uv.className = 'uv-extreme';
+    }
     for (var i = 1; i < 6; i++) {
       var dayDateCalc = (data.daily[i].dt - data.daily[0].dt) / 24 / 60 / 60;
-      console.log(dayDateCalc);
       var days = document.createElement('div');
       fiveDays.appendChild(days);
       days.className = 'days';
-      console.log(data.daily[i]);
       var dayDate = document.createElement('h4');
       days.appendChild(dayDate);
       dayDate.textContent = moment().add(dayDateCalc, 'days').format('L');
