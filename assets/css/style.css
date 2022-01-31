@@ -3,6 +3,9 @@
   margin: 0px;
   box-sizing: border-box;
 }
+body {
+  background-color: rgb(200, 200, 200);
+}
 header {
   background-color: black;
   text-align: center;
@@ -14,8 +17,7 @@ h1 {
   font-family: 'Quintessential', cursive;
 }
 main {
-  background-color: rgb(200, 200, 200);
-  margin: 10px;
+  margin: 20px;
   display: flex;
   justify-content: center;
   align-items: flex-start;
@@ -30,7 +32,7 @@ h3 {
   font-family: 'Quintessential', cursive;
 }
 #search {
-  margin: 10px;
+  padding: 10px;
   flex: 30%;
   display: flex;
   flex-direction: column;
@@ -42,21 +44,45 @@ h3 {
   border-bottom: 5px dotted black;
   padding: 10px;
 }
-#display {
+input, button {
+  font-size: 1.5rem;
+  padding: 5px;
   margin: 10px;
-  flex: 65%;
+  width: 96%;
+  border-radius: 10px;
+  font-family: 'Quintessential', cursive;
+}
+button {
+  background-color: black;
+  color: rgb(200, 200, 200);
+}
+#display {
+  padding: 10px;
+  flex: 70%;
   display: flex;
   flex-direction: column;
   justify-content: start;
   align-items: flex-start;
   line-height: 2;
-
 }
 #current {
+  padding: 10px;
   width: 100%;
   border-bottom: 5px dotted black;
 }
+#currentCity {
+  display: flex;
+  justify-content: start;
+  align-items: center;
+}
+#currentCityInfo {
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+  flex: 1;
+}
 #forecast {
+  padding: 10px;
   width: 100%;
   display: flex;
   flex-direction: column;
@@ -69,24 +95,6 @@ h3 {
   display: flex;
   justify-content: space-between;
   align-items: center;
-}
-input, button {
-  font-size: 1.5rem;
-  margin: 10px;
-  width: 90%;
-  border-radius: 10px;
-  font-family: 'Quintessential', cursive;
-}
-#currentCity {
-  display: flex;
-  justify-content: start;
-  align-items: center;
-}
-#currentCityInfo {
-  display: flex;
-  justify-content: space-evenly;
-  align-items: center;
-  flex: 1;
 }
 .days {
   border: 1px solid green;
