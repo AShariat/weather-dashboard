@@ -6,40 +6,91 @@
 header {
   background-color: black;
   text-align: center;
-  padding: 20px;
-  margin-bottom: 20px;
 }
 h1 {
-  font-size: 3rem;
-  color: white;
+  padding: 10px;
+  font-size: 4rem;
+  color: rgb(200, 200, 200);
   font-family: 'Quintessential', cursive;
 }
 main {
+  background-color: rgb(200, 200, 200);
+  margin: 10px;
   display: flex;
   justify-content: center;
   align-items: flex-start;
+  flex-wrap: wrap;
 }
-#search, #display {
-  border: 1px solid red;
+h2 {
+  font-size: 3rem;
+  font-family: 'Quintessential', cursive;
+}
+h3 {
+  font-size: 2rem;
+  font-family: 'Quintessential', cursive;
 }
 #search {
-  margin-left: 20px;
-  flex: 25%;
+  margin: 10px;
+  flex: 30%;
   display: flex;
   flex-direction: column;
   justify-content: start;
   align-items: center;
 }
+#searchInput {
+  width: 100%;
+  border-bottom: 5px dotted black;
+  padding: 10px;
+}
 #display {
-  margin-right: 20px;
-  flex: 75%;
+  margin: 10px;
+  flex: 65%;
   display: flex;
   flex-direction: column;
   justify-content: start;
   align-items: flex-start;
+  line-height: 2;
 
 }
-#current, #forecast {
-  border: 1px solid blue;
-  width: 100%;;
+#current {
+  width: 100%;
+  border-bottom: 5px dotted black;
+}
+#forecast {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+}
+#forecast div {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+input, button {
+  font-size: 1.5rem;
+  margin: 10px;
+  width: 90%;
+  border-radius: 10px;
+  font-family: 'Quintessential', cursive;
+}
+#currentCity {
+  display: flex;
+  justify-content: start;
+  align-items: center;
+}
+#currentCityInfo {
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+  flex: 1;
+}
+.days {
+  border: 1px solid green;
+  margin: 5px;
+  display: flex;
+  flex-direction: column;
 }
