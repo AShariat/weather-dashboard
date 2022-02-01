@@ -6,24 +6,19 @@ const uv = document.querySelector('#uv');
 const fiveDays = document.querySelector('#fiveDays');
 const searchHistory = document.querySelector('#searchHistory');
 function historyButton(localHistory) {
-  var history;
-  console.log(localHistory);
+  var history = [];
   for (var y = 0; y < localHistory.length; y++) {
-    console.log(localHistory[y]);
-    history = document.createElement('button');
-    searchHistory.appendChild(history);
-    history.textContent = localHistory[y];
-    history.value = localHistory[y];
-    history.setAttribute('type', 'submit');
-    console.log(history);
-    history.addEventListener('click', function() {
-      console.log(history.value);
-    });
+    history[y] = document.createElement('button');
+    searchHistory.appendChild(history[y]);
+    history[y].className = 'button';
+    history[y].textContent = localHistory[y];
+    history[y].value = localHistory[y];
+    history[y].setAttribute('type', 'submit');
   }
 };
 function searchHistoryDisplay() {
   var localHistory = [];
-  document.querySelector('#searchHistory').innerHTML = "";
+  searchHistory.innerHTML = "";
   for (var x = 0; x < localStorage.length; x++) {
     localHistory[x] = localStorage.key(x);
   }
@@ -104,6 +99,27 @@ function getLatLon(value) {
       console.error(err);
     })
 };
+function getLatLonHistory(selectedHistory) {
+  fetch('https://weatherapi-com.p.rapidapi.com/search.json?q='+selectedHistory, {
+    "method": "GET",
+    "headers": {
+      "x-rapidapi-host": "weatherapi-com.p.rapidapi.com",
+      "x-rapidapi-key": "12b796900dmsh12b8fa6011f391ep1d4f63jsnff6a49444565"
+    }
+  })
+  .then(response => {
+    return response.json();
+    })
+    .then(data => {
+      document.querySelector('#cityName').textContent = " " + data[0].name +", " + data[0].region;
+      document.querySelector('#currentDate').textContent = now;
+      getWeather(data[0].lat, data[0].lon, data[0].name);
+    })
+    .catch(err => {
+      console.error(err);
+    })
+};
+
 document.querySelector('#searchButton').addEventListener('click', function() {
   fiveDays.innerHTML = "";
   if (input.value == "" || input.value == null) {
@@ -111,5 +127,10 @@ document.querySelector('#searchButton').addEventListener('click', function() {
   } else {
   getLatLon(input.value);
   }
+});
+$(document).on('click', '.button', function() {
+  var selectedHistory = ($(this)[0].innerHTML);
+  fiveDays.innerHTML = "";
+  getLatLonHistory(selectedHistory);
 });
 searchHistoryDisplay();
