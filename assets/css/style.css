@@ -64,6 +64,12 @@ button {
   background-color: black;
   color: rgb(200, 200, 200);
 }
+#searchHistory {
+  width: 100%;
+  border-bottom: 5px dotted black;
+  padding: 10px;
+  border: none;
+}
 #display {
   padding: 10px;
   flex: 70%;
@@ -90,6 +96,31 @@ button {
   align-items: center;
   flex: 1;
   flex-wrap: wrap;
+}
+.uv-low {
+  padding: 0 10px;
+  border-radius: 10px;
+  background-color: green;
+}
+.uv-moderate {
+  padding: 0 10px;
+  border-radius: 10px;
+  background-color: yellow;
+}
+.uv-high {
+  padding: 0 10px;
+  border-radius: 10px;
+  background-color: orange;
+}
+.uv-veryhigh {
+  padding: 0 10px;
+  border-radius: 10px;
+  background-color: red;
+}
+.uv-extreme {
+  padding: 0 10px;
+  border-radius: 10px;
+  background-color: purple;
 }
 #forecast {
   padding: 10px;
