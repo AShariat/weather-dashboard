@@ -64,6 +64,12 @@ button {
   background-color: black;
   color: rgb(200, 200, 200);
 }
+#searchHistory {
+  width: 100%;
+  border-bottom: 5px dotted black;
+  padding: 10px;
+  border: none;
+}
 #display {
   padding: 10px;
   flex: 70%;

@@ -1,16 +1,41 @@
 const now = moment().format('L');
-const key = '32ed05888dd11ce89460365fde5e625e';
 const input = document.querySelector('#input');
 const display = document.querySelector('#display');
 const icon = document.querySelector('#icon');
-const fiveDays = document.querySelector('#fiveDays');
 const uv = document.querySelector('#uv');
-function getWeather(lat, lon) {
-  fetch('https://api.openweathermap.org/data/2.5/onecall?lat='+lat+'&lon='+lon+'&exclude=hourly,minutely&units=imperial&lang=en&appid='+key)
+const fiveDays = document.querySelector('#fiveDays');
+const searchHistory = document.querySelector('#searchHistory');
+function historyButton(localHistory) {
+  var history;
+  console.log(localHistory);
+  for (var y = 0; y < localHistory.length; y++) {
+    console.log(localHistory[y]);
+    history = document.createElement('button');
+    searchHistory.appendChild(history);
+    history.textContent = localHistory[y];
+    history.value = localHistory[y];
+    history.setAttribute('type', 'submit');
+    console.log(history);
+    history.addEventListener('click', function() {
+      console.log(history.value);
+    });
+  }
+};
+function searchHistoryDisplay() {
+  var localHistory = [];
+  document.querySelector('#searchHistory').innerHTML = "";
+  for (var x = 0; x < localStorage.length; x++) {
+    localHistory[x] = localStorage.key(x);
+  }
+  historyButton(localHistory);
+};
+function getWeather(lat, lon, name) {
+  fetch('https://api.openweathermap.org/data/2.5/onecall?lat='+lat+'&lon='+lon+'&exclude=hourly,minutely&units=imperial&lang=en&appid=32ed05888dd11ce89460365fde5e625e')
   .then(response => {
     return response.json();
     })
   .then(data => {
+    localStorage.setItem(name, data.current.temp);
     var iconCode = data.current.weather[0].icon;
     icon.setAttribute('src', 'http://openweathermap.org/img/wn/' + iconCode + '@2x.png');
     document.querySelector('#currentTemp').textContent = data.current.temp + " F";
@@ -52,6 +77,7 @@ function getWeather(lat, lon) {
       var dayHumidity = document.createElement('h5');
       days.appendChild(dayHumidity);
       dayHumidity.textContent = "Humidity: " + data.daily[i].humidity + " %";
+      searchHistoryDisplay();
     }
   })
   .catch(err => {
@@ -72,13 +98,18 @@ function getLatLon(value) {
     .then(data => {
       document.querySelector('#cityName').textContent = " " + data[0].name +", " + data[0].region;
       document.querySelector('#currentDate').textContent = now;
-      getWeather(data[0].lat, data[0].lon);
+      getWeather(data[0].lat, data[0].lon, data[0].name);
     })
     .catch(err => {
       console.error(err);
     })
 };
-document.querySelector('button').addEventListener('click', function() {
+document.querySelector('#searchButton').addEventListener('click', function() {
   fiveDays.innerHTML = "";
+  if (input.value == "" || input.value == null) {
+    window.location.reload();
+  } else {
   getLatLon(input.value);
+  }
 });
+searchHistoryDisplay();
