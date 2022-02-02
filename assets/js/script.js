@@ -1,10 +1,10 @@
 const now = moment().format('L');
 const input = document.querySelector('#input');
+const searchHistory = document.querySelector('#searchHistory');
 const display = document.querySelector('#display');
 const icon = document.querySelector('#icon');
 const uv = document.querySelector('#uv');
 const fiveDays = document.querySelector('#fiveDays');
-const searchHistory = document.querySelector('#searchHistory');
 function historyButton(localHistory) {
   var history = [];
   for (var y = 0; y < localHistory.length; y++) {
@@ -28,13 +28,13 @@ function getWeather(lat, lon, name) {
   fetch('https://api.openweathermap.org/data/2.5/onecall?lat='+lat+'&lon='+lon+'&exclude=hourly,minutely&units=imperial&lang=en&appid=32ed05888dd11ce89460365fde5e625e')
   .then(response => {
     return response.json();
-    })
+  })
   .then(data => {
     localStorage.setItem(name, data.current.temp);
     var iconCode = data.current.weather[0].icon;
     icon.setAttribute('src', 'http://openweathermap.org/img/wn/' + iconCode + '@2x.png');
-    document.querySelector('#currentTemp').textContent = data.current.temp + " F";
-    document.querySelector('#currentWind').textContent = data.current.wind_speed + " MPH";
+    document.querySelector('#currentTemp').textContent = data.current.temp + "°F";
+    document.querySelector('#currentWind').textContent = data.current.wind_speed + " mph";
     document.querySelector('#currentHumidity').textContent = data.current.humidity + " %";
     uv.textContent = data.current.uvi;
     if (data.current.uvi < 3) {
@@ -62,13 +62,13 @@ function getWeather(lat, lon, name) {
       dayIcon.setAttribute('src', 'http://openweathermap.org/img/wn/' + iconCode + '.png');
       var dayMinTemp = document.createElement('h5');
       days.appendChild(dayMinTemp);
-      dayMinTemp.textContent = "Temp (Min): " + data.daily[i].temp.min + " F";
+      dayMinTemp.textContent = "Temp ↓: " + data.daily[i].temp.min + "°F";
       var dayMaxTemp = document.createElement('h5');
       days.appendChild(dayMaxTemp);
-      dayMaxTemp.textContent = "Temp (Max): " + data.daily[i].temp.max + " F";
+      dayMaxTemp.textContent = "Temp ↑: " + data.daily[i].temp.max + "°F";
       var dayWindSpeed = document.createElement('h5');
       days.appendChild(dayWindSpeed);
-      dayWindSpeed.textContent = "Wind: " + data.daily[i].wind_speed + " MPH";
+      dayWindSpeed.textContent = "Wind: " + data.daily[i].wind_speed + " mph";
       var dayHumidity = document.createElement('h5');
       days.appendChild(dayHumidity);
       dayHumidity.textContent = "Humidity: " + data.daily[i].humidity + " %";
@@ -127,6 +127,10 @@ document.querySelector('#searchButton').addEventListener('click', function() {
   } else {
   getLatLon(input.value);
   }
+});
+document.querySelector('#clearHistory').addEventListener('click', function() {
+  localStorage.clear();
+  window.location.reload();
 });
 $(document).on('click', '.button', function() {
   var selectedHistory = ($(this)[0].innerHTML);
